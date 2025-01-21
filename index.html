@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог AI Инструментов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2d3748;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            padding-bottom: 4rem; /* Добавлено пространство для кнопки */
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-icon {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .tool-icon span {
+            font-size: 2.5rem;
+        }
+
+        .tool-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #1f2937;
+        }
+
+        .tool-description {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            font-size: 1.1rem;
+        }
+
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem; /* Добавлен отступ снизу */
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 0.35rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+            transform: scale(1.05);
+        }
+
+        .visit-site {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            color: white;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover .visit-site {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .ai-explanation {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            line-height: 1.6;
+            color: #4b5563;
+            font-size: 1.1rem;
+        }
+
+        .ai-explanation strong {
+            color: #2d3748;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Каталог AI Инструментов</h1>
+            <p>Современные инструменты искусственного интеллекта для различных задач</p>
+            <div class="ai-explanation">
+                <p><strong>Искусственный интеллект (ИИ)</strong> - это технология, которая позволяет компьютерам учиться, анализировать информацию и решать задачи подобно человеку. ИИ помогает автоматизировать рутинные задачи, создавать контент, анализировать данные и принимать решения, делая нашу работу более эффективной и творческой.</p>
+            </div>
+        </header>
+
+        <div class="tools-grid">
+            <a href="https://chat.openai.com" class="tool-card" target="_blank">
+                <div class="tool-icon">
+                    <span>🤖</span>
+                </div>
+                <h2 class="tool-name">ChatGPT</h2>
+                <p class="tool-description">Мощный языковой ИИ для общения, написания текстов и помощи в различных задачах</p>
+                <div class="tool-tags">
+                    <span class="tag">Чат-бот</span>
+                    <span class="tag">Текст</span>
+                    <span class="tag">OpenAI</span>
+                </div>
+                <span class="visit-site">Перейти на сайт →</span>
+            </a>
+
+            <a href="https://labs.openai.com" class="tool-card" target="_blank">
+                <div class="tool-icon">
+                    <span>🎨</span>
+                </div>
+                <h2 class="tool-name">DALL-E</h2>
+                <p class="tool-description">Генератор изображений на основе текстовых описаний</p>
+                <div class="tool-tags">
+                    <span class="tag">Изображения</span>
+                    <span class="tag">Арт</span>
+                    <span class="tag">OpenAI</span>
+                </div>
+                <span class="visit-site">Перейти на сайт →</span>
+            </a>
+
+            <a href="https://www.jasper.ai" class="tool-card" target="_blank">
+                <div class="tool-icon">
+                    <span>📝</span>
+                </div>
+                <h2 class="tool-name">Jasper</h2>
+                <p class="tool-description">ИИ-помощник для создания маркетингового контента и копирайтинга</p>
+                <div class="tool-tags">
+                    <span class="tag">Копирайтинг</span>
+                    <span class="tag">Маркетинг</span>
+                </div>
+                <span class="visit-site">Перейти на сайт →</span>
+            </a>
+
+            <a href="https://mubert.com" class="tool-card" target="_blank">
+                <div class="tool-icon">
+                    <span>🎵</span>
+                </div>
+                <h2 class="tool-name">Mubert</h2>
+                <p class="tool-description">Генератор музыки с использованием искусственного интеллекта</p>
+                <div class="tool-tags">
+                    <span class="tag">Музыка</span>
+                    <span class="tag">Аудио</span>
+                </div>
+                <span class="visit-site">Перейти на сайт →</span>
+            </a>
+
+            <a href="https://obviously.ai" class="tool-card" target="_blank">
+                <div class="tool-icon">
+                    <span>📊</span>
+                </div>
+                <h2 class="tool-name">Obviously AI</h2>
+                <p class="tool-description">Платформа для анализа данных и прогнозирования без кода</p>
+                <div class="tool-tags">
+                    <span class="tag">Аналитика</span>
+                    <span class="tag">No-code</span>
+                </div>
+                <span class="visit-site">Перейти на сайт →</span>
+            </a>
+
+            <a href="https://claude.ai" class="tool-card" target="_blank">
+                <div class="tool-icon">
+                    <span>🔍</span>
+                </div>
+                <h2 class="tool-name">Anthropic Claude</h2>
+                <p class="tool-description">Продвинутый ИИ-ассистент для анализа и обработки информации</p>
+                <div class="tool-tags">
+                    <span class="tag">Анализ</span>
+                    <span class="tag">Ассистент</span>
+                </div>
+                <span class="visit-site">Перейти на сайт →</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
