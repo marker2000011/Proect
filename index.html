@@ -5,25 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог AI Инструментов</title>
     <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         :root {
-            --gradient-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --gradient-dark: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            --gradient-light: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            --gradient-dark: linear-gradient(-45deg, #1a1c2c, #4a1942, #141E30, #243B55);
             --text-light: #2d3748;
             --text-dark: #e2e8f0;
             --card-light: rgba(255, 255, 255, 0.95);
             --card-dark: rgba(26, 32, 44, 0.95);
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             background: var(--gradient-light);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
             min-height: 100vh;
             padding: 2rem;
         }
@@ -31,33 +52,46 @@
         body.dark-theme {
             background: var(--gradient-dark);
             color: var(--text-dark);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
         }
 
         .controls {
             position: fixed;
-            top: 1rem;
-            right: 1rem;
+            top: 2rem;
+            right: 2rem;
             display: flex;
             gap: 1rem;
             z-index: 1000;
+            backdrop-filter: blur(8px);
+            padding: 0.5rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .theme-toggle, .language-select {
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 2rem;
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            background: var(--primary-gradient);
             color: white;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             outline: none;
+            backdrop-filter: blur(4px);
         }
 
         .theme-toggle:hover, .language-select:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-toggle:active, .language-select:active {
+            transform: translateY(1px);
         }
 
         .language-select {
@@ -73,22 +107,24 @@
         .language-select option {
             background: #4a5568;
             color: white;
+            padding: 0.5rem;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             color: var(--text-light);
-            padding: 2rem;
+            padding: 3rem;
             background: var(--card-light);
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
+            animation: float 6s ease-in-out infinite;
         }
 
         .dark-theme header {
@@ -97,26 +133,28 @@
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: -1px;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            padding: 1rem;
         }
 
         .tool-card {
             background: var(--card-light);
-            border-radius: 1rem;
-            padding: 1.5rem;
+            border-radius: 1.5rem;
+            padding: 2rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -124,10 +162,12 @@
             color: inherit;
             display: block;
             padding-bottom: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .dark-theme .tool-card {
             background: var(--card-dark);
+            border-color: rgba(255, 255, 255, 0.05);
         }
 
         .tool-card::before {
@@ -137,14 +177,14 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            background: var(--primary-gradient);
             transform: scaleX(0);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
         }
 
         .tool-card:hover::before {
@@ -152,30 +192,29 @@
         }
 
         .tool-icon {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            width: 70px;
-            height: 70px;
-            border-radius: 15px;
+            background: var(--primary-gradient);
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .dark-theme .tool-icon {
-            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: pulse 3s ease-in-out infinite;
         }
 
         .tool-icon span {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         .tool-name {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             color: var(--text-light);
+            letter-spacing: -0.5px;
         }
 
         .dark-theme .tool-name {
@@ -184,8 +223,8 @@
 
         .tool-description {
             color: #6b7280;
-            line-height: 1.6;
-            margin-bottom: 1.25rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
             font-size: 1.1rem;
         }
 
@@ -197,39 +236,40 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .tag {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            padding: 0.35rem 1rem;
+            background: var(--primary-gradient);
+            padding: 0.5rem 1.25rem;
             border-radius: 2rem;
             font-size: 0.9rem;
-            color: #4b5563;
-            transition: all 0.2s ease;
-        }
-
-        .dark-theme .tag {
-            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
-            color: #e2e8f0;
+            color: white;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .tag:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .visit-site {
             position: absolute;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            padding: 0.5rem 1rem;
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-gradient);
             color: white;
             border-radius: 2rem;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 500;
             opacity: 0;
-            transform: translateX(10px);
-            transition: all 0.3s ease;
+            transform: translateX(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .tool-card:hover .visit-site {
@@ -238,12 +278,13 @@
         }
 
         .ai-explanation {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto 2rem;
             text-align: center;
-            line-height: 1.6;
+            line-height: 1.8;
             color: #4b5563;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            padding: 0 2rem;
         }
 
         .dark-theme .ai-explanation {
@@ -251,17 +292,18 @@
         }
 
         .ai-explanation strong {
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
 
         [data-translate] {
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-translate].slide-out {
-            transform: translateY(-10px);
+            transform: translateY(-20px);
             opacity: 0;
         }
 
@@ -276,11 +318,17 @@
             }
 
             h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
+            }
+
+            header {
+                padding: 2rem 1rem;
+                margin-bottom: 2rem;
             }
 
             .tools-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .tool-card {
@@ -291,12 +339,54 @@
                 position: static;
                 justify-content: center;
                 margin-bottom: 1rem;
+                background: none;
+                padding: 0;
             }
+
+            .ai-explanation {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+        }
+
+        /* Добавляем плавное появление контента при загрузке */
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Добавляем эффект свечения для карточек */
+        .tool-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem;
+            background: var(--primary-gradient);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .tool-card:hover::after {
+            opacity: 0.1;
         }
     </style>
 </head>
 <body>
-    <div class="controls">
+    <div class="controls fade-in">
         <button class="theme-toggle" onclick="toggleTheme()">🌓 Тема</button>
         <select class="language-select" onchange="changeLanguage(this.value)">
             <option value="ru">Русский</option>
@@ -305,7 +395,7 @@
     </div>
 
     <div class="container">
-        <header>
+        <header class="fade-in">
             <h1>Каталог AI Инструментов</h1>
             <p>Современные инструменты искусственного интеллекта для различных задач</p>
             <div class="ai-explanation">
@@ -313,8 +403,8 @@
             </div>
         </header>
 
-        <div class="tools-grid">
-            <a href="https://chat.openai.com" class="tool-card" target="_blank">
+        <div class="tools-grid fade-in">
+            <a href="https://chat.openai.com" class="tool-card" target="_blank" data-tool="chatgpt">
                 <div class="tool-icon">
                     <span>🤖</span>
                 </div>
@@ -328,7 +418,7 @@
                 <span class="visit-site">Перейти на сайт →</span>
             </a>
 
-            <a href="https://labs.openai.com" class="tool-card" target="_blank">
+            <a href="https://labs.openai.com" class="tool-card" target="_blank" data-tool="dalle">
                 <div class="tool-icon">
                     <span>🎨</span>
                 </div>
@@ -342,7 +432,7 @@
                 <span class="visit-site">Перейти на сайт →</span>
             </a>
 
-            <a href="https://www.jasper.ai" class="tool-card" target="_blank">
+            <a href="https://www.jasper.ai" class="tool-card" target="_blank" data-tool="jasper">
                 <div class="tool-icon">
                     <span>📝</span>
                 </div>
@@ -355,7 +445,7 @@
                 <span class="visit-site">Перейти на сайт →</span>
             </a>
 
-            <a href="https://mubert.com" class="tool-card" target="_blank">
+            <a href="https://mubert.com" class="tool-card" target="_blank" data-tool="mubert">
                 <div class="tool-icon">
                     <span>🎵</span>
                 </div>
@@ -368,7 +458,7 @@
                 <span class="visit-site">Перейти на сайт →</span>
             </a>
 
-            <a href="https://obviously.ai" class="tool-card" target="_blank">
+            <a href="https://obviously.ai" class="tool-card" target="_blank" data-tool="obviouslyAi">
                 <div class="tool-icon">
                     <span>📊</span>
                 </div>
@@ -381,7 +471,7 @@
                 <span class="visit-site">Перейти на сайт →</span>
             </a>
 
-            <a href="https://claude.ai" class="tool-card" target="_blank">
+            <a href="https://claude.ai" class="tool-card" target="_blank" data-tool="claude">
                 <div class="tool-icon">
                     <span>🔍</span>
                 </div>
@@ -540,14 +630,6 @@
                 document.querySelectorAll(selector).forEach(el => {
                     el.setAttribute('data-translate', '');
                 });
-            });
-
-            // Add data-tool attributes to tool cards
-            const toolCards = document.querySelectorAll('.tool-card');
-            Object.keys(translations.ru.tools).forEach((toolKey, index) => {
-                if (toolCards[index]) {
-                    toolCards[index].setAttribute('data-tool', toolKey);
-                }
             });
         });
     </script>
